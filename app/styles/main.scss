@@ -8,6 +8,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 body {
   font-family: "Open Sans";
   font-weight: 400;
+  background-color: #FFFFCC;
 }
 
 h1, h2 {
@@ -17,7 +18,7 @@ h1, h2 {
 
 .association {
   padding: 5px 5px;
-  border: 2px solid;
+  border: 1px solid grey;
   margin: 0px 10px 10px 0px;
   box-shadow: 0px 5px 3px #AAA;
   transition: background-color 0.25s ease;
@@ -51,7 +52,7 @@ h1, h2 {
   }
 }
 
-.scroll {
+.scroll{
   overflow: auto;
   height: 80vh;
 }

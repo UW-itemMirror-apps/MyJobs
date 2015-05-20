@@ -2,21 +2,22 @@
 
 /**
  * @ngdoc overview
- * @name itemMirrorAngularDemoApp
+ * @name MyJobsApp
  * @description
- * # itemMirrorAngularDemoApp
+ * # MyJobsApp
  *
  * Main module of the application.
  */
 angular
-  .module('itemMirrorAngularDemoApp', [
+  .module('MyJobsApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'mgcrea.ngStrap'
+    'mgcrea.ngStrap',
+    'ui.sortable'
   ])
   .config(function ($routeProvider) {
     $routeProvider

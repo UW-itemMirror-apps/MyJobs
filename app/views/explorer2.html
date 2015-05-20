@@ -1,15 +1,16 @@
 <div class="row">
 
-<!-- Association Listing Section -->
+  <!-- Association Listing Section -->
   <div class="col-md-4">
-    <h4>Current Location: <i>{{mirror.displayName}}</i></h4>
-    <button ng-click="previous()" class="btn btn-default btn-lg">Back</button>
+    <h2>{{mirror.displayName}}</h2>
 
-   <div class="scroll" ui-sortable="sortableOptions" ng-model="associations">
-   <div ng-repeat="assoc in associations| orderBy:'assoc.guid'" ng-click= "select(assoc)">
-   
-   <div class="association" ng-style="{ 'background-color': assoc.customColor }" ng-class="{'selected': assoc.selected}" >
-    <div class="row">
+  <button ng-click="previous()" class="btn btn-default btn-lg">Back</button>
+
+    <div class="scroll">
+      <div ng-repeat="assoc in associations" ng-click="select(assoc)">
+      
+        <div class="association" ng-style="{ 'background-color': assoc.customColor }" ng-class="{'selected': assoc.selected}">
+          <div class="row">
             <div class="col-md-2">
               <span ng-show="assoc.isGrouping" class="glyphicon glyphicon-folder-close"></span>
               <span ng-show="assoc.isPhantom" class="glyphicon glyphicon-link"></span>
@@ -17,32 +18,36 @@
 
             </div>
             <div class="col-md-8">
-              <h4>{{assoc.localItem}}</h4>
+              <h3>{{ matchFirstLn(assoc.displayText) }}</h3>
               <a ng-show="assoc.isPhantom" ng-href="{{assoc.associatedItem}}">{{ assoc.associatedItem }}</a>
             </div> 
-            <!-- row -->
-           <div class="row buttons" ng-show="assoc.selected">
+            
+          </div> 
+          <!-- row -->
+          <div class="row buttons" ng-show="assoc.selected">
             <!-- Buttons -->
             <div class="col-md-6">
               <button class="btn btn-default" ng-click="navigate(assoc.guid)" ng-show="assoc.isGrouping">Enter</button>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <button class="pull-right btn btn-danger" ng-click="deleteAssoc(assoc.guid)">Delete</button>
             </div> 
-          </div>
-      </div> 
-    </div>  
-   </div>
+
+           </div>
+          </div> 
+        </div>  
+      </div>
   </div>
-</div>
-<div class="col-md-6" ng-switch on="editSection">
+
+  <div class="col-md-6" ng-switch on="editSection">
     <button class="btn-default btn btn-lg"
             ng-click="editSection = 'assoc-editor'">Association Editor</button>
     <button class="btn-default btn btn-lg"
             ng-click="editSection = 'new-phantom'">Create Phantom</button>
     <button class="btn-default btn btn-lg"
             ng-click="editSection = 'new-folder'">Create Folder</button>
-<!-- Association Editing Section -->
+
+  <!-- Association Editing Section -->
   <div ng-switch-when="assoc-editor" class="association-editor">
     <p class="lead" ng-hide="selectedAssoc">
       Select an association to the left in order to edit it!
@@ -109,8 +114,5 @@
     <button ng-click="save()" class="btn btn-lg btn-success">Save</button>
     <button ng-click="refresh()" class="btn btn-lg btn-success">Refresh</button>
   </div>
-</div>
 
-
-
-    
+  </div>

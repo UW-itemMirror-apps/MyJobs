@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name itemMirrorAngularDemoApp.controller:MainCtrl
+ * @name MyJobsApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the itemMirrorAngularDemoApp
+ * Controller of the MyJobsApp
  */
-angular.module('itemMirrorAngularDemoApp')
+angular.module('MyJobsApp')
   .controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

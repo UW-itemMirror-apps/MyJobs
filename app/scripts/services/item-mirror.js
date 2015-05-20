@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc service
- * @name itemMirrorAngularDemoApp.itemMirror
+ * @name MyJobsApp.itemMirror
  * @description
  * # itemMirror
  *
@@ -12,7 +12,7 @@
  * also wraps the asynchronous methods in promises for better
  * compatability with Angular and more overall flexibility.
  */
-angular.module('itemMirrorAngularDemoApp')
+angular.module('MyJobsApp')
   .factory('itemMirror', ['dropboxAuth', '$q', function (dropboxAuth, $q) {
     // This variable represents the current itemMirror that the
     // service will display data for. To keep things simple, we're
@@ -43,10 +43,10 @@ angular.module('itemMirrorAngularDemoApp')
     // core item mirror attributes and namespace attributes.
     function assocWrapper(guid) {
 
-      var result = mirror.getAssociationNamespaceAttribute('tags', guid, 'im-angular-demo');
+      var result = mirror.getAssociationNamespaceAttribute('tags', guid, 'MyJobsApp');
       var tags = result ? JSON.parse(result) : {};
       function saveTags() {
-        mirror.setAssociationNamespaceAttribute('tags', JSON.stringify(tags), guid, 'im-angular-demo');
+        mirror.setAssociationNamespaceAttribute('tags', JSON.stringify(tags), guid, 'MyJobsApp');
       }
 
       return {
@@ -59,8 +59,12 @@ angular.module('itemMirrorAngularDemoApp')
         isPhantom: mirror.isAssociationPhantom(guid),
 
         // Simple plain text attribute that stores a color for a given association
-        get customColor(){ return mirror.getAssociationNamespaceAttribute('color', guid, 'im-angular-demo'); },
-        set customColor(color){ mirror.setAssociationNamespaceAttribute('color', color, guid, 'im-angular-demo'); },
+        get customColor(){ return mirror.getAssociationNamespaceAttribute('color', guid, 'MyJobsApp'); },
+        set customColor(color){mirror.setAssociationNamespaceAttribute('color', color, guid, 'MyJobsApp'); },
+
+        // Simple plain text attribute that stores the ordre for a given association
+        get order(){ return mirror.getAssociationNamespaceAttribute('order', guid, 'MyJobsApp'); },
+        set order(newOrder){ mirror.setAssociationNamespaceAttribute('order', newOrder, guid, 'MyJobsApp'); },
 
         // These functions are all dealing with the private variable tags. This gives us a way to add,
         // delete, and list tags with an attribute. Internally these are represented as JSON and then these
@@ -102,10 +106,10 @@ angular.module('itemMirrorAngularDemoApp')
       var dropboxXooMLUtility;
       var dropboxItemUtility;
       var mirrorSyncUtility;
-      var rootGroupingItemURI = '/';
+      var rootGroupingItemURI = '/MyJobs';
 
       dropboxXooMLUtility = {
-        fragmentURI: '/XooML2.xml',
+        fragmentURI: '/MyJobs/XooML2.xml',
         driverURI: 'DropboxXooMLUtility',
         dropboxClient: dropboxClient
       };
@@ -154,7 +158,7 @@ angular.module('itemMirrorAngularDemoApp')
         console.log(error);
         if (error) { deferred.reject(error); }
         else {
-          mirrors.push(newMirror);
+          mirrors.unshift(newMirror);
           mirror = newMirror;
           updateAssociations();
           console.log('assocs updated');
@@ -205,7 +209,7 @@ angular.module('itemMirrorAngularDemoApp')
           }
           else {
             // Add a new wrapped association
-            associations.push( assocWrapper(guid) );
+            associations.unshift( assocWrapper(guid) );
             deferred.resolve();
           }
         });

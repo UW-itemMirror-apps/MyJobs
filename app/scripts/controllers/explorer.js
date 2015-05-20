@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name itemMirrorAngularDemoApp.controller:ExplorerCtrl
+ * @name MyJobsApp.controller:ExplorerCtrl
  * @description
  * # ExplorerCtrl
- * Controller of the itemMirrorAngularDemoApp
+ * Controller of the MyJobsApp
  */
-angular.module('itemMirrorAngularDemoApp')
-  .controller('ExplorerCtrl', function ($scope, itemMirror) {
+angular.module('MyJobsApp').
+controller('ExplorerCtrl', function ($scope, itemMirror) {
   	// starts everything up after dropbox loads
   	var init = itemMirror.initialize;
   	init.then(function() {
@@ -28,6 +28,21 @@ angular.module('itemMirrorAngularDemoApp')
         itemMirror.deleteAssociation(guid).
         then(assocScopeUpdate);
       };
+              // Below code works when applied ngDraggable.js; can swap two folders.
+              // add    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script> to index.html;
+              // add    <script src="bower_components/ngDraggable/ngDraggable.js"></script> to index.html;
+              // add ,'ngDraggable' to app.js as DI
+              // add ng-drop="true" ng-drop-success="onDropComplete($index, $data,$event)" to ng-repeat row; 
+              // add ng-drag="true" ng-drag-data="assoc" to association row;
+              //  $scope.onDropComplete = function(index, obj, evt) {
+              //      var otherObj = $scope.associations[index];
+              //      var otherIndex = $scope.associations.indexOf(obj);
+              //      $scope.associations[index] = obj;
+              //      $scope.associations[otherIndex] = otherObj;
+              //  };
+
+
+
 
       $scope.navigate = function(guid) {
         itemMirror.navigateMirror(guid).

@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc service
- * @name itemMirrorAngularDemoApp.dropboxAuth
+ * @name MyJobsApp.dropboxAuth
  * @description
  * # dropboxAuth
  *
@@ -10,7 +10,7 @@
  * ItemMirror factory is dependent on this factory for operating. Note
  * that this is also dependent on access to the Dropbox library.
  */
-angular.module('itemMirrorAngularDemoApp')
+angular.module('MyJobsApp')
   .factory('dropboxAuth', ['$q', function ($q) {
     var dropboxClientCredentials = {
       key: '6d22rktdrfxkiq9',
@@ -21,8 +21,8 @@ angular.module('itemMirrorAngularDemoApp')
     // way to get it working with Angular
     dropboxClient.authDriver(new Dropbox.AuthDriver.Popup({
       // Replace the reciveUrl with localhost or whatever host you're using for development
-      //reciverUrl: 'http://localhost:9000/misc/oath_reciever.html'
-      receiverUrl: 'https://im-angular-demo.thordev.me/misc/oauth_reciever.html'
+      receiverUrl: 'http://localhost:9000/misc/oauth_reciever.html'
+      //receiverUrl: 'https://im-angular-demo.thordev.me/misc/oauth_reciever.html'
     }));
 
     var authenticatedClient = null;
