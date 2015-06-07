@@ -2,62 +2,90 @@
 
 <!-- Association Listing Section -->
   <div class="col-md-4">
-    <h4>Current Location: <i>{{mirror.displayName}}</i></h4>
-    <button ng-click="previous()" class="btn btn-default btn-lg">Back</button>
+    <h4>Current Folder: <i>{{mirror.displayName}}</i></h4>
 
-   <div class="scroll" ui-sortable="sortableOptions" ng-model="associations">
-   <div ng-repeat="assoc in associations| orderBy:'assoc.guid'" ng-click= "select(assoc)">
-   
-   <div class="association" ng-style="{ 'background-color': assoc.customColor }" ng-class="{'selected': assoc.selected}" >
     <div class="row">
-            <div class="col-md-2">
+      <div class="col-md-4">
+    <input ng-model="folderRequest.displayText" type="text" placeholder='company'> </div>
+    <div class="col-md-4">
+    <input ng-model="folderRequest.localItem" type="text" placeholder='position'> </div>
+    <div class="col-md-2">
+    <button ng-click="createFolder()" class="btn btn-default btn-sm">New Application</button></div>
+    </div>
+  
+
+   <div class="scroll" accordion close-others="oneAtATime" ui-sortable="sortableOptions" ng-model="associations">
+   <div accordion-group ng-repeat="assoc in associations"  ng-click= "select(assoc)">
+   <accordion-heading>
+     <div class="row" ng-click="listItems(assoc.guid)" ng-class="{'selected': assoc.selected}" ng-style="{ 'background-color': assoc.customColor }">
+    <!--class="association" ng-class="{'selected': assoc.selected}" ng-style="{ 'background-color': assoc.customColor }">-->
+ 
+           <div class="col-md-2">
               <span ng-show="assoc.isGrouping" class="glyphicon glyphicon-folder-close"></span>
-              <span ng-show="assoc.isPhantom" class="glyphicon glyphicon-link"></span>
-              <span ng-show="!assoc.isGrouping" class="glyphicon glyphicon-file"></span>
+           <span ng-show="assoc.isPhantom" class="glyphicon glyphicon-link"></span>
+         <span ng-show="!assoc.isGrouping" class="glyphicon glyphicon-file"></span>
 
             </div>
             <div class="col-md-8">
-              <h4>{{assoc.localItem}}</h4>
+              <h4>{{assoc.displayText}}_{{assoc.localItem}}</h4>
               <a ng-show="assoc.isPhantom" ng-href="{{assoc.associatedItem}}">{{ assoc.associatedItem }}</a>
             </div> 
+          <div class="handle col-md-1"><i class="glyphicon glyphicon-move"></i>
+           </div>
             <!-- row -->
-           <div class="row buttons" ng-show="assoc.selected">
+        <div class="row buttons" ng-show="assoc.selected">
             <!-- Buttons -->
-            <div class="col-md-6">
+            <div class="col-md-5">
               <button class="btn btn-default" ng-click="navigate(assoc.guid)" ng-show="assoc.isGrouping">Enter</button>
             </div>
-            <div class="col-md-4">
-              <button class="pull-right btn btn-danger" ng-click="deleteAssoc(assoc.guid)">Delete</button>
-            </div> 
+            <div class="col-md-6">
+              <button class="pull-right btn btn-default" ng-click="deleteAssoc(assoc.guid)"><a class="info" href="http://commentcamarche.net">Delete<span>Delete Folder in Dropbox?</span></a></button>
+            </div>
           </div>
-      </div> 
-    </div>  
+    
+    </div>
+    </accordion-heading>
+
+<!--here to be inserted with contents of the folder-->
+
+ Status: {{assoc.customStatus}}
+
+
    </div>
   </div>
 </div>
+
+
+
+
 <div class="col-md-6" ng-switch on="editSection">
-    <button class="btn-default btn btn-lg"
-            ng-click="editSection = 'assoc-editor'">Association Editor</button>
-    <button class="btn-default btn btn-lg"
-            ng-click="editSection = 'new-phantom'">Create Phantom</button>
-    <button class="btn-default btn btn-lg"
-            ng-click="editSection = 'new-folder'">Create Folder</button>
+    <!--<button class="btn-default btn btn-lg"
+            ng-click="editSection = 'assoc-editor'">Association Editor</button>-->
+     <button class="btn btn-lg btn-info"
+            ng-click="editSection = 'new-phantom'">Add Files</button>
+
+            <button ng-click="save()" class="btn btn-lg btn-info">Save</button>
+            
+   <!-- <button class="btn-default btn btn-lg"
+            ng-click="editSection = 'new-folder'">Create Folder</button>-->
 <!-- Association Editing Section -->
   <div ng-switch-when="assoc-editor" class="association-editor">
     <p class="lead" ng-hide="selectedAssoc">
-      Select an association to the left in order to edit it!
+
+      Select an association to the left to edit it!
     </p>
-    <div ng-if="selectedAssoc">
-      <h2>Editor</h2>
+    <div ng-if="selectedAssoc" >
+      
 
-      <h3>{{selectedAssoc.localItem}}</h3>
+      <h3>Application Status</h3>
+      <input type="status"
+             ng-model="selectedAssoc.customStatus"
+             ng-model-options="{ getterSetter: true }">
 
-      <textarea ng-model="selectedAssoc.displayText"></textarea>
-
-      <h2>Tags</h2>
-        <input type="text" ng-model="tagValue">
+      <h2>Short Notes</h2>
+        <input class="longInput" style="height:200px; width: 680px; padding: 11px 0px 11px 0px;" type="text" ng-model="tagValue"></input>
         <button ng-click="selectedAssoc.addTag(tagValue)"><span class="glyphicon glyphicon-plus"></span></button>
-      <h3>Current Tags</h3>
+      <h3>Current Notes</h3>
       <div class="tag" ng-repeat="tag in selectedAssoc.listTags()">{{tag}}
         <button ng-click="selectedAssoc.deleteTag(tag)">
           <span class="glyphicon glyphicon-remove"></span>
@@ -69,14 +97,18 @@
              ng-model="selectedAssoc.customColor"
              ng-model-options="{ getterSetter: true }">
 
+             
+
       <!-- This button resets the color by setting the value to null -->
-      <button ng-click="selectedAssoc.customColor = null">Reset Color</button>
+      <button ng-click="selectedAssoc.customColor = null">Reset Color</button><br>
+      
     </div>
+    
   </div>
 
   <!-- Phantom Creation Section -->
   <div ng-switch-when="new-phantom" class="phantom">
-    <h2>New Phantom</h2>
+    <h2>New Note</h2>
       <form>
         <label>Display Text</label>
         <br/>
@@ -86,6 +118,8 @@
         <br/>
         <input ng-model="phantomRequest.itemURI" type="text">
       </form>
+
+
       <button ng-click="createPhantom()" class="btn btn-lg btn-default">Create</button>
     </div>
 
@@ -105,10 +139,10 @@
     </div>
   </div>
 
-  <div class="col-md-2">
-    <button ng-click="save()" class="btn btn-lg btn-success">Save</button>
-    <button ng-click="refresh()" class="btn btn-lg btn-success">Refresh</button>
-  </div>
+ <!-- <div class="col-md-2">
+    <button ng-click="save()" class="btn btn-lg btn-info">Save</button>
+   <!-- <button ng-click="refresh()" class="btn btn-lg btn-info">Refresh</button>-->
+ <!-- </div>-->
 </div>
 
 

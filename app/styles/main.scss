@@ -8,13 +8,114 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 body {
   font-family: "Open Sans";
   font-weight: 400;
-  background-color: #FFFFCC;
+  background-color: #6DC9E3;
 }
+
+/* ---- nav ---- */
+#TopNav {
+    width: 100%;
+    background: #868689;
+    text-align: Left;
+    position: fixed;
+    top: 0px;
+    z-index: 9990;
+    float: left;
+    padding: 0px 0;
+}
+
+* html #TopNav {
+    position: absolute;
+}
+
+#TopNav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#TopNav ul li {
+    display: inline;
+    padding: 0 40px 0 0;
+
+}
+
+#TopNav ul li.last {
+    padding: 0 0px 0 0;
+}
+
+#TopNav ul li a {
+    color: #fff;
+    font-size: 2.2em;
+
+}
+
+/* ---popover --*/
+a.info 
+{ 
+    position:relative; 
+    z-index:24; background-color:#ddd; 
+    color:#000; 
+    text-decoration:none 
+} 
+
+a.info:hover {z-index:10; background-color:#ff0} 
+
+a.info span{display: none} 
+
+a.info:hover span 
+{ 
+    display:block; 
+    position:absolute; 
+    top:2em; right:-2em; width:15em; 
+    border:1px solid #0cf; 
+    background-color:#555; color:#fff; 
+} 
 
 h1, h2 {
   font-weight: 300;
+  color: #FCFDFF;
 }
 
+h1.banner {
+  position: absolute;
+    left: 320px;
+    top: 150px;
+    font-size: 4.0em;
+    color: #FCFDFF;
+  
+}
+
+#whyneedit {
+  position: absolute;
+  left: 400px;
+  top: 280px;
+  font-size: 2.0em;
+  color: #FCFDFF;
+}
+
+#needittext {
+  position: absolute;
+  left: 250px;
+  top: 400px;
+  font-size: 1.6em;
+  color: #FCFDFF;
+}
+
+.longInput{
+text-align: left;
+padding-left:0;
+padding-top:0;
+padding-bottom:0.4em;
+padding-right: 0.4em;
+}
+
+.lead{
+  position: absolute;
+  left: 100px;
+  top: 1000;
+  font-size: 2.0em;
+  color: #FCFDFF;
+}
 
 .association {
   padding: 5px 5px;
@@ -24,7 +125,7 @@ h1, h2 {
   transition: background-color 0.25s ease;
 
   .glyphicon {
-    font-size: 175%;
+    font-size: 100%;
 
     &.glyphicon-folder-close {
     }
@@ -46,6 +147,8 @@ h1, h2 {
     font-size: 150%;
     padding: 0;
     margin: 5px;
+    color: #FCFDFF;
+
   }
 
   &:hover, &:active {

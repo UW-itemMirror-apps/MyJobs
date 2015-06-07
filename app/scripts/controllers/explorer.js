@@ -7,76 +7,82 @@
  * # ExplorerCtrl
  * Controller of the MyJobsApp
  */
-angular.module('MyJobsApp').
-controller('ExplorerCtrl', function ($scope, itemMirror) {
+angular.module('MyJobsApp')
+.config(['$provide', function ($provide){
+    $provide.decorator('accordionDirective', function($delegate) { 
+        var directive = $delegate[0];
+        directive.replace = true;
+        return $delegate;
+    });
+  }])
+
+
+
+.controller('ExplorerCtrl', function ($scope, $filter, itemMirror) {
   	// starts everything up after dropbox loads
   	var init = itemMirror.initialize;
   	init.then(function() {
       $scope.mirror = itemMirror;
       $scope.associations = itemMirror.associations;
+      $scope.associations.sort(_localItemCompare);
       $scope.selectedAssoc = null;
+
 
       // This needs to be called after the service updates the associations.
       // Angular doesn't watch the scope of the service's associations, so any
       // updates don't get propogated to the front end.
       function assocScopeUpdate() {
         $scope.associations = itemMirror.associations;
+        $scope.associations.sort(_localItemCompare);
         $scope.selectedAssoc = null;
        }
+
+      // This function is used to sort the association according to the order namespace attribute before ng-repeat read them.
+       function _localItemCompare(a,b){
+      if (a.order>b.order) return 1;
+      else if (a.order<b.order) return -1;
+      else return 0;
+    }
 
       $scope.deleteAssoc = function(guid) {
         itemMirror.deleteAssociation(guid).
         then(assocScopeUpdate);
+        $scope.associations.sort(_localItemCompare);
       };
-              // Below code works when applied ngDraggable.js; can swap two folders.
-              // add    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script> to index.html;
-              // add    <script src="bower_components/ngDraggable/ngDraggable.js"></script> to index.html;
-              // add ,'ngDraggable' to app.js as DI
-              // add ng-drop="true" ng-drop-success="onDropComplete($index, $data,$event)" to ng-repeat row; 
-              // add ng-drag="true" ng-drag-data="assoc" to association row;
-              //  $scope.onDropComplete = function(index, obj, evt) {
-              //      var otherObj = $scope.associations[index];
-              //      var otherIndex = $scope.associations.indexOf(obj);
-              //      $scope.associations[index] = obj;
-              //      $scope.associations[otherIndex] = otherObj;
-              //  };
-//myapp.controller('sortableController', function ($scope) {
-  var tmpList = [];
-  
-  for (var i = 1; i <= 6; i++){
-    tmpList.push({
-      text: 'Item ' + i,
-      value: i
-    });
+
+
+
+   $scope.sortableOptions = {
+    
+    stop: function(e, ui) {
+      //this callback has the changed model
+    var reorderLog = $scope.associations.map(function(assoc){
+      
+    return assoc.localItem
+
+     }).join(', ');
+
+     var i=1;
+      $scope.associations.forEach(function (assoc){
+        assoc.order =i;
+        i = i + 1;
+      });
+
+      $scope.save();
+   
+      //console.log(reorderlog)
   }
   
-  $scope.list = tmpList;
-  
-  
-  $scope.sortingLog = [];
-  
-  $scope.sortableOptions = {
-    update: function(e, ui) {
-      var logEntry = tmpList.map(function(i){
-        return i.value;
-      }).join(', ');
-      $scope.sortingLog.push('Update: ' + logEntry);
-    },
-    stop: function(e, ui) {
-      // this callback has the changed model
-      var logEntry = tmpList.map(function(i){
-        return i.value;
-      }).join(', ');
-      $scope.sortingLog.push('Stop: ' + logEntry);
-    }
-  };
-//});
+}; 
+
+
 
 
       $scope.navigate = function(guid) {
         itemMirror.navigateMirror(guid).
         then(assocScopeUpdate);
       };
+
 
       $scope.previous = function() {
         itemMirror.previous().
@@ -161,3 +167,6 @@ controller('ExplorerCtrl', function ($scope, itemMirror) {
 
     });
   });
+
+
+

@@ -62,9 +62,14 @@ angular.module('MyJobsApp')
         get customColor(){ return mirror.getAssociationNamespaceAttribute('color', guid, 'MyJobsApp'); },
         set customColor(color){mirror.setAssociationNamespaceAttribute('color', color, guid, 'MyJobsApp'); },
 
-        // Simple plain text attribute that stores the ordre for a given association
+        // Simple plain text attribute that stores the status for a given association
+        get customStatus(){ return mirror.getAssociationNamespaceAttribute('status', guid, 'MyJobsApp'); },
+        set customStatus(status){ mirror.setAssociationNamespaceAttribute('status', status, guid, 'MyJobsApp'); },
+
+        // Simple plain text attribute that stores the order for a given association
         get order(){ return mirror.getAssociationNamespaceAttribute('order', guid, 'MyJobsApp'); },
         set order(newOrder){ mirror.setAssociationNamespaceAttribute('order', newOrder, guid, 'MyJobsApp'); },
+
 
         // These functions are all dealing with the private variable tags. This gives us a way to add,
         // delete, and list tags with an attribute. Internally these are represented as JSON and then these
@@ -96,8 +101,24 @@ angular.module('MyJobsApp')
       associations = mirror.listAssociations().map(function(guid) {
         return assocWrapper(guid);
       });
+    
+// The sorting funtion is added to the associations before ng-repeat reads it. 
+
     }
 
+    
+
+
+    //  associations = associations.sort(function(a,b){
+
+    //    var nameA=a.localItem.toLowerCase(), nameB=b.localItem.toLowerCase()
+     //     if (nameA < nameB) //sort string ascending
+     //       return -1 
+    //      if (nameA > nameB)
+     //     return 1
+      //    return 0 //default return value (no sorting);
+   // });
+//}
     // Used to construct the very first ItemMirror object in the root
     // of the dropbox. In the future, this should be extended to use
     // FolderSelect, so that we can instead choose a different 'root'
@@ -184,6 +205,8 @@ angular.module('MyJobsApp')
 
         return deferred.promise;
       },
+      
+
 
       refresh: function() {
         var deferred = $q.defer();
@@ -208,8 +231,11 @@ angular.module('MyJobsApp')
             console.log(error);
           }
           else {
+
+            var a = assocWrapper(guid);
+            a.order = 0;
             // Add a new wrapped association
-            associations.unshift( assocWrapper(guid) );
+            associations.unshift( a );
             deferred.resolve();
           }
         });
@@ -270,6 +296,8 @@ angular.module('MyJobsApp')
         }
         return deferred.promise;
       },
+
+
 
       // Renames the local item of an association. This will actually
       // change the name on the storage platform, and so it's

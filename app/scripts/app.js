@@ -17,6 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'mgcrea.ngStrap',
+    'ui.bootstrap',
     'ui.sortable'
   ])
   .config(function ($routeProvider) {
@@ -25,7 +26,7 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/explorer', {
+     .when('/explorer', {
         templateUrl: 'views/explorer.html',
         controller: 'ExplorerCtrl'
       })
