@@ -38,11 +38,13 @@ angular.module('MyJobsApp')
        }
 
       // This function is used to sort the association according to the order namespace attribute before ng-repeat read them.
-       function _localItemCompare(a,b){
-      if (a.order>b.order) return 1;
-      else if (a.order<b.order) return -1;
-      else return 0;
-    }
+        function _localItemCompare(a, b) {
+            if (a.order == undefined) return -1;
+            if (b.order == undefined) return 1;
+
+            var ret = a.order - b.order;
+            return ret;
+        }
 
       $scope.deleteAssoc = function(guid) {
         itemMirror.deleteAssociation(guid).
@@ -52,7 +54,7 @@ angular.module('MyJobsApp')
 
 
 
-   $scope.sortableOptions = {
+  $scope.sortableOptions = {
     
     stop: function(e, ui) {
       //this callback has the changed model
@@ -62,18 +64,19 @@ angular.module('MyJobsApp')
 
      }).join(', ');
 
-     var i=1;
-      $scope.associations.forEach(function (assoc){
-        assoc.order =i;
-        i = i + 1;
-      });
+                $scope.saveWithOrder();
+            }
+        };
 
-      $scope.save();
-   
-      //console.log(reorderlog)
-  }
-  
-}; 
+        $scope.saveWithOrder = function (guid) {
+            var i = 1;
+            $scope.associations.forEach(function (assoc) {
+                assoc.order = i;
+                i = i + 1;
+            });
+
+            $scope.save();
+        };
 
 
 
@@ -128,6 +131,7 @@ angular.module('MyJobsApp')
           switchToAssocEditor();
           assocScopeUpdate();
           resetPhantomRequest();
+           $scope.saveWithOrder();
         });
       };
 
@@ -148,6 +152,7 @@ angular.module('MyJobsApp')
           switchToAssocEditor();
           assocScopeUpdate();
           resetFolderRequest();
+           $scope.saveWithOrder();
         });
       };
 
