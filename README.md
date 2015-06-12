@@ -8,10 +8,10 @@ Please create a folder named "MyJobs" directly under your dropbox account.
 MyJobs is a single page application for users to track, organize and manage their job applications and career advancement. It centralizes all the information related to user's’ job application and provides a convenient way to add metadata about a job application to record some invaluable information generated in the process. The physical folder for each job application will be stored in dropbox while the users can view the content of the folder and manage the folder through MyJobs app. Actions on this app will be synchronized through itemMirror. (for details about itemMirror, please visit https://github.com/KeepingFoundThingsFound/item-mirror-angular-demo)
 
 ### Why does people need to use it?
-Sometimes people need to go through a lot of job applications until they land a job. I believe no one wants to apply for the same job twice so keeping track of every application in a centralized place is a good practice. 
-Also there is some invaluable experience in the job application process a person can later visit back, like interview questions, interview quizzes etc.
-During job search, you may come across with a lot of people and they could become your great network resource afterwards. Those information can be recorded through the app using namespace attributes.
-People can also mark down their accomplishments on a job so later on they can easily apply those into their annual performance review document or to prepare them for a promotion.
+1. Sometimes people need to go through a lot of job applications until they land a job. I believe no one wants to apply for the same job twice so keeping track of every application in a centralized place is a good practice. 
+2. Also there is some invaluable experience in the job application process a person can later visit back, like interview questions, interview quizzes etc.
+3. During job search, you may come across with a lot of people and they could become your great network resource afterwards. Those information can be recorded through the app using namespace attributes.
+4. People can also mark down their accomplishments on a job so later on they can easily apply those into their annual performance review document or to prepare them for a promotion.
 
 
 ### Targeted users
